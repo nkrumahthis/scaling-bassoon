@@ -2,7 +2,9 @@ import scala.util.{Try, Success, Failure}
 import java.io.{BufferedWriter, FileWriter, File}
 
 class Database(val dbFilename: String):
-    def insert(record: String): Try[Unit] = ???
+    def insert(record: String): Try[Unit] =
+        writeToFile(List(record), true)
+        
     def selectAll(): Try[Seq[String]] = ???
     def delete(indexToDelete: Int): Try[Int] = ???
 
