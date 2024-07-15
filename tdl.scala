@@ -1,5 +1,8 @@
+import scala.util.Try
 class Database(val dbFilename: String):
-    // methods go here
+    def insert(record: String): Try[Unit] = ???
+    def selectAll(): Try[Seq[String]] = ???
+    def delete(indexToDelete: Int): Try[Int] = ???
 end Database
 
 @main
