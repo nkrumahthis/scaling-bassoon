@@ -16,7 +16,7 @@ class Database(val dbFilename: String):
             case t: Throwable => Failure(t)
         finally
             if bufferedSource != null then bufferedSource.close
-            
+
     def delete(indexToDelete: Int): Try[Int] = ???
 
     /**
@@ -36,6 +36,13 @@ class Database(val dbFilename: String):
             case e: Throwable => Failure(e)
         finally
             if bw != null then bw.close
+
+    private def removeElementByIndex(rows: Seq[String], indexToDelete: Int): Try[Seq[String]] =
+        try
+            val result = rows.zipWithIndex.filter{case(_, idx) => idx != indexToDelete}.map(_._1)
+            Success(result)
+        catch
+            case e: Throwable => Failure(e)
 
 @main
 def ToDoList =
