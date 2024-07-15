@@ -17,7 +17,16 @@ class Database(val dbFilename: String):
         finally
             if bufferedSource != null then bufferedSource.close
 
-    def delete(indexToDelete: Int): Try[Int] = ???
+    def delete(indexToDelete: Int): Try[Int] = 
+        val maybeNumRowsDeleted = for 
+            rows <- selectAll()
+            newRows <- removeElementByIndex(rows, indexToDelete)
+            numRowsDeleted = rows.size - newRows.size
+            _ <- writeToFile(newRows, false)
+        yield
+            numRowsDeleted
+        maybeNumRowsDeleted
+
 
     /**
       * write to the file
