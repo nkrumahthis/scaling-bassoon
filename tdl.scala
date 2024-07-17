@@ -1,6 +1,7 @@
 import scala.util.{Try, Success, Failure}
 import java.io.{BufferedWriter, FileWriter, File}
-import scala.io.{Source, BufferedSource, StdInss}
+import scala.io.{Source, BufferedSource}
+import IOHelper.*
 
 class Database(val dbFilename: String):
     def insert(record: String): Try[Unit] =
@@ -52,11 +53,8 @@ class Database(val dbFilename: String):
         catch
             case e: Throwable => Failure(e)
 
-def promptUser(): Try[Unit] = Try {
-    println("\n(Commands: a \"task\", d 1, u 1, h, q, v)")
-    print("Yo: ")
-}
-
 @main
 def ToDoList =
     val db = Database("./ToDoList.dat")
+    promptUser()
+    val input: Try[String] = readInput()
