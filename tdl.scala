@@ -1,6 +1,6 @@
 import scala.util.{Try, Success, Failure}
 import java.io.{BufferedWriter, FileWriter, File}
-import scala.io.{Source, BufferedSource}
+import scala.io.{Source, BufferedSource, StdInss}
 
 class Database(val dbFilename: String):
     def insert(record: String): Try[Unit] =
@@ -18,14 +18,13 @@ class Database(val dbFilename: String):
             if bufferedSource != null then bufferedSource.close
 
     def delete(indexToDelete: Int): Try[Int] = 
-        val maybeNumRowsDeleted = for 
+        for 
             rows <- selectAll()
             newRows <- removeElementByIndex(rows, indexToDelete)
             numRowsDeleted = rows.size - newRows.size
             _ <- writeToFile(newRows, false)
         yield
             numRowsDeleted
-        maybeNumRowsDeleted
 
 
     /**
@@ -52,6 +51,11 @@ class Database(val dbFilename: String):
             Success(result)
         catch
             case e: Throwable => Failure(e)
+
+def promptUser(): Try[Unit] = Try {
+    println("\n(Commands: a \"task\", d 1, u 1, h, q, v)")
+    print("Yo: ")
+}
 
 @main
 def ToDoList =
