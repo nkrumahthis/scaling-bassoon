@@ -53,8 +53,12 @@ class Database(val dbFilename: String):
         catch
             case e: Throwable => Failure(e)
 
+def mainLoop(): Try[Unit] = for{
+    _ <- promptUser()
+    } yield ()
+
 @main
 def ToDoList =
-    val db = Database("./ToDoList.dat")
-    promptUser()
-    val input: Try[String] = readInput()
+    val datafile = "./ToDoList.dat"
+    val db = Database(datafile)
+    // val procssor = InputProcessor(db)
