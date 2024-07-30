@@ -53,12 +53,29 @@ class Database(val dbFilename: String):
         catch
             case e: Throwable => Failure(e)
 
-def mainLoop(): Try[Unit] = for{
-    _ <- promptUser()
-    } yield ()
+def InputProcessor(db: Database) = 
+    println("InputProcessor called")
+    ()
+
+def handleUserInput(input: String): Try[Unit] =
+    println("handle user input called")
+    Try(())
 
 @main
 def ToDoList =
     val datafile = "./ToDoList.dat"
     val db = Database(datafile)
-    // val procssor = InputProcessor(db)
+
+    def mainLoop(): Try[Unit] = for{
+        _       <- promptUser()
+        input   <- readInput()
+        _       <- {
+            handleUserInput(input)
+            mainLoop()
+        }
+    } yield ()
+
+    // this starts the application running.
+    mainLoop()
+    
+end ToDoList
