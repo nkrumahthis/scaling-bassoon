@@ -53,24 +53,37 @@ class Database(val dbFilename: String):
         catch
             case e: Throwable => Failure(e)
 
-def InputProcessor(db: Database) = 
-    println("InputProcessor called")
-    ()
+class InputProcessor(db: Database):
+  def handleUserInput(input: String): Try[Unit] = input match
+    case "q" => 
+      ???
+    case "h" =>
+      ???
+    case "v" | "l" =>
+      ???
+    case add if add.startsWith("a ") =>
+      ???
+    case del if del.startsWith("d ") =>
+      ???
+    case _ =>
+      ???
+  end handleUserInput
 
-def handleUserInput(input: String): Try[Unit] =
-    println("handle user input called")
-    Try(())
+  // more code here ...
+
+end InputProcessor
 
 @main
 def ToDoList =
     val datafile = "./ToDoList.dat"
     val db = Database(datafile)
+    val ip = InputProcessor(db)
 
     def mainLoop(): Try[Unit] = for{
         _       <- promptUser()
         input   <- readInput()
         _       <- {
-            handleUserInput(input)
+            ip.handleUserInput(input)
             mainLoop()
         }
     } yield ()
