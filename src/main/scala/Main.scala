@@ -62,17 +62,14 @@ class InputProcessor(db: Database):
       case Success(tasks) =>
         // in the Success case we get a list of tasks (strings),
         // so print those out in a nice format:
-        printTasks(tasks)
+        for 
+          (task, count) <- tasks.zip(Stream from 1)
+        do
+          println(s"${count}. $task")
       case Failure(exception) => 
         System.err.println(exception)
 
   }
-
-  private def printTasks(tasks: Seq[String]): Unit =
-    for 
-      (task, count) <- tasks.zip(Stream from 1)
-    do
-      println(s"${count}. $task")
 
   def handleUserInput(input: String): Try[Unit] = input match
     case "q" =>
