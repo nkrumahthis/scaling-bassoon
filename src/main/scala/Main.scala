@@ -56,7 +56,7 @@ class Database(val dbFilename: String):
 class InputProcessor(db: Database):
   def handleUserInput(input: String): Try[Unit] = input match
     case "q" => 
-      ???
+      Try(System.exit(0))
     case "h" =>
       ???
     case "v" | "l" =>
@@ -68,8 +68,6 @@ class InputProcessor(db: Database):
     case _ =>
       ???
   end handleUserInput
-
-  // more code here ...
 
 end InputProcessor
 
