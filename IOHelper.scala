@@ -23,4 +23,5 @@ object IOHelper:
         """.stripMargin.trim
         println(text)
     }
+
 end IOHelper
