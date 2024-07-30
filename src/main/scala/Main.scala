@@ -58,7 +58,7 @@ class InputProcessor(db: Database):
     case "q" => 
       Try(System.exit(0))
     case "h" =>
-      ???
+      IOHelper.showHelp()
     case "v" | "l" =>
       ???
     case add if add.startsWith("a ") =>
